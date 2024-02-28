@@ -32,6 +32,11 @@ class _ProductsViewState extends State<ProductsView> {
     }
   }
 
+  void _updateProduct(Product product) {
+    cubit.updateProduct(product);
+    mainCubit.updateShoplistCount(cubit.state.count);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,18 +99,18 @@ class _ProductsViewState extends State<ProductsView> {
                   return ProductTile(
                     product: product,
                     onCountDecreased: () {
+                      int productCount = product.count - 1;
                       final updatedProduct = product.copyWith(
-                        count: product.count - 1,
+                        count: productCount.isNegative ? 0 : productCount,
                       );
-                      cubit.updateProduct(updatedProduct);
-                      mainCubit.updateShoplistCount(state.count);
+                      _updateProduct(updatedProduct);
                     },
                     onCountIncreaesed: () {
+                      int productCount = product.count + 1;
                       final updatedProduct = product.copyWith(
-                        count: product.count + 1,
+                        count: productCount,
                       );
-                      cubit.updateProduct(updatedProduct);
-                      mainCubit.updateShoplistCount(state.count);
+                      _updateProduct(updatedProduct);
                     },
                   );
                 },
