@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cafe_app/feautures/data/models/domain_models/product.dart';
 import 'package:cafe_app/feautures/domain/usecases/add_product.dart';
 import 'package:cafe_app/feautures/domain/usecases/get_products.dart';
+import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -43,14 +44,18 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   void addProduct(Product product) async {
     final result = await _addProduct(Params(product));
+    debugPrint(result.toString());
     final newState = result.fold(
       (failure) => state.copyWith(
         status: ProductsStatus.error,
       ),
       (product) {
-        final products = state.products;
+        final products = List<Product>.from(
+          state.products ?? [],
+          growable: true,
+        );
         if (state.status == ProductsStatus.loaded) {
-          products!.add(product);
+          products.add(product);
           return state.copyWith(
             products: products,
             status: ProductsStatus.loaded,

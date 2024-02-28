@@ -38,7 +38,7 @@ class CafeLocalDataSourceImpl implements CafeLocalDataSource {
   Future<int> insertProduct(Product product) {
     final number = _database.into(_database.productsTable).insert(
           ProductsTableCompanion(
-            id: Value(product.id),
+            uuid: Value(product.uuid),
             title: Value(product.title),
             count: Value(product.count),
           ),

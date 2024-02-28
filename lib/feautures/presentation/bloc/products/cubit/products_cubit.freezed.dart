@@ -102,7 +102,9 @@ class __$$ProductsStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ProductsStateImpl implements _ProductsState {
+class _$ProductsStateImpl
+    with DiagnosticableTreeMixin
+    implements _ProductsState {
   const _$ProductsStateImpl(
       {final List<Product>? products, this.status = ProductsStatus.initial})
       : _products = products;
@@ -122,8 +124,17 @@ class _$ProductsStateImpl implements _ProductsState {
   final ProductsStatus status;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ProductsState(products: $products, status: $status)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ProductsState'))
+      ..add(DiagnosticsProperty('products', products))
+      ..add(DiagnosticsProperty('status', status));
   }
 
   @override

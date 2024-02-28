@@ -3,6 +3,7 @@ import 'package:cafe_app/feautures/data/datasource/cafe_local_data_source.dart';
 import 'package:cafe_app/feautures/data/models/domain_models/product.dart';
 import 'package:cafe_app/feautures/domain/repositories/cafe_repository.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: CafeRepository)
@@ -39,12 +40,14 @@ class CafeRepositoryImpl implements CafeRepository {
   Future<Either<Failures, Product>> insertProduct(Product product) async {
     try {
       final number = await _localDataSource.insertProduct(product);
+      debugPrint('Number: $number');
       if (!number.isNegative) {
         return Right(product);
       } else {
         return Left(CacheFailure());
       }
     } catch (e) {
+      debugPrint('Error: $e');
       return Left(CacheFailure());
     }
   }

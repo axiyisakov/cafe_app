@@ -15,15 +15,16 @@ class ProductsView extends StatefulWidget {
 class _ProductsViewState extends State<ProductsView> {
   final _productController = TextEditingController();
 
+  ProductsCubit get cubit => context.read<ProductsCubit>();
   void _addProduct() {
     final productName = _productController.text;
     if (productName.isNotEmpty) {
       final product = Product(
-        id: const Uuid().v4(),
+        uuid: const Uuid().v4(),
         title: productName,
         count: 0,
       );
-      context.read<ProductsCubit>().addProduct(product);
+      cubit.addProduct(product);
       _productController.clear();
     }
   }
