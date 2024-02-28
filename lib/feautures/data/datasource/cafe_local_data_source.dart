@@ -31,6 +31,7 @@ class CafeLocalDataSourceImpl implements CafeLocalDataSource {
   @override
   Future<List<Product>> getProducts() async {
     final products = await _database.select(_database.productsTable).get();
+
     return products;
   }
 
@@ -61,4 +62,5 @@ class CafeLocalDataSourceImpl implements CafeLocalDataSource {
   }
 
   $ProductsTableTable get productsTable => _database.productsTable;
+  $ShoplistTableTable get shoplistTable => _database.shoplistTable;
 }

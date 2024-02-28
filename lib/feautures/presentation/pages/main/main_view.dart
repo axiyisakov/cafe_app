@@ -1,6 +1,7 @@
 import 'package:cafe_app/feautures/presentation/bloc/main/cubit/main_cubit.dart';
 import 'package:cafe_app/feautures/presentation/pages/products/products_screen.dart';
 import 'package:cafe_app/feautures/presentation/pages/shoplist/shoplist_screen.dart';
+import 'package:cafe_app/feautures/presentation/widgets/custom_badge.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,17 +19,17 @@ class _MainViewState extends State<MainView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<MainCubit, int>(
+      body: BlocBuilder<MainCubit, MainState>(
         builder: (context, state) {
           return CupertinoTabScaffold(
             controller: cubit.tabController,
             tabBar: CupertinoTabBar(
-              currentIndex: state,
+              currentIndex: state.page,
               height: kToolbarHeight,
               onTap: cubit.changePage,
               backgroundColor: Theme.of(context).inputDecorationTheme.fillColor,
-              items: const [
-                BottomNavigationBarItem(
+              items: [
+                const BottomNavigationBarItem(
                   icon: Icon(
                     CupertinoIcons.chat_bubble,
                   ),
@@ -38,11 +39,21 @@ class _MainViewState extends State<MainView> {
                   ),
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(
-                    CupertinoIcons.compass,
+                  icon: CustomBadge(
+                    badgeContent: Text(
+                      state.shoplistCount.toString(),
+                    ),
+                    child: const Icon(
+                      CupertinoIcons.compass,
+                    ),
                   ),
-                  activeIcon: Icon(
-                    CupertinoIcons.compass,
+                  activeIcon: CustomBadge(
+                    badgeContent: Text(
+                      state.shoplistCount.toString(),
+                    ),
+                    child: const Icon(
+                      CupertinoIcons.compass,
+                    ),
                   ),
                   label: 'Shoplist',
                 ),

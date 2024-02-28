@@ -15,6 +15,7 @@ class ProductsCubit extends Cubit<ProductsState> {
   final GetProducts _getProducts;
   final AddProduct _addProduct;
   final UpdateProduct _updateProduct;
+
   ProductsCubit({
     required GetProducts getProducts,
     required AddProduct addProduct,
@@ -37,10 +38,14 @@ class ProductsCubit extends Cubit<ProductsState> {
       (failure) => const ProductsState(
         status: ProductsStatus.error,
       ),
-      (products) => ProductsState(
-        products: products,
-        status: ProductsStatus.loaded,
-      ),
+      (products) {
+        int commonCount = getCommonCount(products);
+        return ProductsState(
+          products: products,
+          status: ProductsStatus.loaded,
+          count: commonCount,
+        );
+      },
     );
 
     emit(newState);
@@ -61,9 +66,11 @@ class ProductsCubit extends Cubit<ProductsState> {
           final index =
               products.indexWhere((element) => element.uuid == product.uuid);
           products[index] = product;
+          int commonCount = getCommonCount(products);
           return state.copyWith(
             products: products,
             status: ProductsStatus.loaded,
+            count: commonCount,
           );
         } else {
           return state.copyWith(
@@ -87,11 +94,14 @@ class ProductsCubit extends Cubit<ProductsState> {
           state.products ?? [],
           growable: true,
         );
+
         if (state.status == ProductsStatus.loaded) {
           products.add(product);
+          int commonCount = getCommonCount(products);
           return state.copyWith(
             products: products,
             status: ProductsStatus.loaded,
+            count: commonCount,
           );
         } else {
           return state.copyWith(
@@ -101,5 +111,13 @@ class ProductsCubit extends Cubit<ProductsState> {
       },
     );
     emit(newState);
+  }
+
+  int getCommonCount(List<Product> products) {
+    int commonCount = 0;
+    for (final product in products) {
+      commonCount += product.count;
+    }
+    return commonCount;
   }
 }

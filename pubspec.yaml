@@ -33,6 +33,7 @@ dependencies:
   ffi: any
   uuid: ^3.0.4
   gap: ^3.0.1
+  badges: ^2.0.1
 
 dev_dependencies:
   ffigen: any

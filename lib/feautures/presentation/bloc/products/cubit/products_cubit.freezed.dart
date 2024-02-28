@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ProductsState {
   List<Product>? get products => throw _privateConstructorUsedError;
   ProductsStatus get status => throw _privateConstructorUsedError;
+  int get count => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ProductsStateCopyWith<ProductsState> get copyWith =>
@@ -30,7 +31,7 @@ abstract class $ProductsStateCopyWith<$Res> {
           ProductsState value, $Res Function(ProductsState) then) =
       _$ProductsStateCopyWithImpl<$Res, ProductsState>;
   @useResult
-  $Res call({List<Product>? products, ProductsStatus status});
+  $Res call({List<Product>? products, ProductsStatus status, int count});
 }
 
 /// @nodoc
@@ -48,6 +49,7 @@ class _$ProductsStateCopyWithImpl<$Res, $Val extends ProductsState>
   $Res call({
     Object? products = freezed,
     Object? status = null,
+    Object? count = null,
   }) {
     return _then(_value.copyWith(
       products: freezed == products
@@ -58,6 +60,10 @@ class _$ProductsStateCopyWithImpl<$Res, $Val extends ProductsState>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as ProductsStatus,
+      count: null == count
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -70,7 +76,7 @@ abstract class _$$ProductsStateImplCopyWith<$Res>
       __$$ProductsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Product>? products, ProductsStatus status});
+  $Res call({List<Product>? products, ProductsStatus status, int count});
 }
 
 /// @nodoc
@@ -86,6 +92,7 @@ class __$$ProductsStateImplCopyWithImpl<$Res>
   $Res call({
     Object? products = freezed,
     Object? status = null,
+    Object? count = null,
   }) {
     return _then(_$ProductsStateImpl(
       products: freezed == products
@@ -96,6 +103,10 @@ class __$$ProductsStateImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as ProductsStatus,
+      count: null == count
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -106,7 +117,9 @@ class _$ProductsStateImpl
     with DiagnosticableTreeMixin
     implements _ProductsState {
   const _$ProductsStateImpl(
-      {final List<Product>? products, this.status = ProductsStatus.initial})
+      {final List<Product>? products,
+      this.status = ProductsStatus.initial,
+      this.count = 0})
       : _products = products;
 
   final List<Product>? _products;
@@ -122,10 +135,13 @@ class _$ProductsStateImpl
   @override
   @JsonKey()
   final ProductsStatus status;
+  @override
+  @JsonKey()
+  final int count;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ProductsState(products: $products, status: $status)';
+    return 'ProductsState(products: $products, status: $status, count: $count)';
   }
 
   @override
@@ -134,7 +150,8 @@ class _$ProductsStateImpl
     properties
       ..add(DiagnosticsProperty('type', 'ProductsState'))
       ..add(DiagnosticsProperty('products', products))
-      ..add(DiagnosticsProperty('status', status));
+      ..add(DiagnosticsProperty('status', status))
+      ..add(DiagnosticsProperty('count', count));
   }
 
   @override
@@ -143,12 +160,13 @@ class _$ProductsStateImpl
         (other.runtimeType == runtimeType &&
             other is _$ProductsStateImpl &&
             const DeepCollectionEquality().equals(other._products, _products) &&
-            (identical(other.status, status) || other.status == status));
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.count, count) || other.count == count));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_products), status);
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_products), status, count);
 
   @JsonKey(ignore: true)
   @override
@@ -160,12 +178,15 @@ class _$ProductsStateImpl
 abstract class _ProductsState implements ProductsState {
   const factory _ProductsState(
       {final List<Product>? products,
-      final ProductsStatus status}) = _$ProductsStateImpl;
+      final ProductsStatus status,
+      final int count}) = _$ProductsStateImpl;
 
   @override
   List<Product>? get products;
   @override
   ProductsStatus get status;
+  @override
+  int get count;
   @override
   @JsonKey(ignore: true)
   _$$ProductsStateImplCopyWith<_$ProductsStateImpl> get copyWith =>

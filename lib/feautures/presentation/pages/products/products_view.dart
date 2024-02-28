@@ -1,4 +1,5 @@
 import 'package:cafe_app/feautures/data/models/domain_models/product.dart';
+import 'package:cafe_app/feautures/presentation/bloc/main/cubit/main_cubit.dart';
 import 'package:cafe_app/feautures/presentation/bloc/products/cubit/products_cubit.dart';
 import 'package:cafe_app/feautures/presentation/widgets/product_tile.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,6 +18,7 @@ class _ProductsViewState extends State<ProductsView> {
   final _productController = TextEditingController();
 
   ProductsCubit get cubit => context.read<ProductsCubit>();
+  MainCubit get mainCubit => context.read<MainCubit>();
   void _addProduct() {
     final productName = _productController.text;
     if (productName.isNotEmpty) {
@@ -88,6 +90,7 @@ class _ProductsViewState extends State<ProductsView> {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   final product = state.products![index];
+                  mainCubit.updateShoplistCount(state.count);
                   return ProductTile(
                     product: product,
                     onCountDecreased: () {
@@ -95,12 +98,14 @@ class _ProductsViewState extends State<ProductsView> {
                         count: product.count - 1,
                       );
                       cubit.updateProduct(updatedProduct);
+                      mainCubit.updateShoplistCount(state.count);
                     },
                     onCountIncreaesed: () {
                       final updatedProduct = product.copyWith(
                         count: product.count + 1,
                       );
                       cubit.updateProduct(updatedProduct);
+                      mainCubit.updateShoplistCount(state.count);
                     },
                   );
                 },
