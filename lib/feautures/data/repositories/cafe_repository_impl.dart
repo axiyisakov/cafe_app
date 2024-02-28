@@ -53,9 +53,13 @@ class CafeRepositoryImpl implements CafeRepository {
   }
 
   @override
-  Future<Either<Failures, Unit>> updateProduct(Product product) {
-    // TODO: implement updateProduct
-    throw UnimplementedError();
+  Future<Either<Failures, Product>> updateProduct(Product product) async {
+    try {
+      await _localDataSource.updateProduct(product);
+      return Right(product);
+    } catch (e) {
+      return Left(CacheFailure());
+    }
   }
 
   @override

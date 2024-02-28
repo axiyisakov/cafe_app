@@ -11,11 +11,12 @@ import 'package:injectable/injectable.dart' as _i2;
 import '../../feautures/data/datasource/cafe_local_data_source.dart' as _i4;
 import '../../feautures/data/repositories/cafe_repository_impl.dart' as _i6;
 import '../../feautures/domain/repositories/cafe_repository.dart' as _i5;
-import '../../feautures/domain/usecases/add_product.dart' as _i10;
+import '../../feautures/domain/usecases/add_product.dart' as _i11;
 import '../../feautures/domain/usecases/get_products.dart' as _i7;
+import '../../feautures/domain/usecases/update_product.dart' as _i10;
 import '../../feautures/presentation/bloc/main/cubit/main_cubit.dart' as _i8;
 import '../../feautures/presentation/bloc/products/cubit/products_cubit.dart'
-    as _i11;
+    as _i12;
 import '../../feautures/presentation/bloc/shoplist/cubit/shoplist_cubit.dart'
     as _i9;
 import '../storage/app_database.dart'
@@ -43,11 +44,14 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i7.GetProducts(get<_i5.CafeRepository>()));
     gh.factory<_i8.MainCubit>(() => _i8.MainCubit());
     gh.factory<_i9.ShoplistCubit>(() => _i9.ShoplistCubit());
-    gh.lazySingleton<_i10.AddProduct>(
-        () => _i10.AddProduct(get<_i5.CafeRepository>()));
-    gh.factory<_i11.ProductsCubit>(() => _i11.ProductsCubit(
+    gh.lazySingleton<_i10.UpdateProduct>(
+        () => _i10.UpdateProduct(get<_i5.CafeRepository>()));
+    gh.lazySingleton<_i11.AddProduct>(
+        () => _i11.AddProduct(get<_i5.CafeRepository>()));
+    gh.factory<_i12.ProductsCubit>(() => _i12.ProductsCubit(
           getProducts: get<_i7.GetProducts>(),
-          addProduct: get<_i10.AddProduct>(),
+          addProduct: get<_i11.AddProduct>(),
+          updateProduct: get<_i10.UpdateProduct>(),
         ));
     return this;
   }

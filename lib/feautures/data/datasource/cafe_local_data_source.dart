@@ -48,8 +48,17 @@ class CafeLocalDataSourceImpl implements CafeLocalDataSource {
   }
 
   @override
-  Future<void> updateProduct(Product product) {
-    // TODO: implement updateProduct
-    throw UnimplementedError();
+  Future<void> updateProduct(Product product) async {
+    _database.update(productsTable)
+      ..where((tbl) => tbl.uuid.equals(product.uuid))
+      ..write(
+        ProductsTableCompanion(
+          uuid: Value(product.uuid),
+          title: Value(product.title),
+          count: Value(product.count),
+        ),
+      );
   }
+
+  $ProductsTableTable get productsTable => _database.productsTable;
 }

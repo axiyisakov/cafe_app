@@ -8,5 +8,5 @@ abstract interface class CafeRepository {
   Future<Either<Failures, Unit>> cacheProducts(List<Product> products);
   Future<Either<Failures, Product>> insertProduct(Product product);
   Future<Either<Failures, Unit>> deleteProduct(int id);
-  Future<Either<Failures, Unit>> updateProduct(Product product);
+  Future<Either<Failures, Product>> updateProduct(Product product);
 }

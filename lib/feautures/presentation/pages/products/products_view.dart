@@ -1,5 +1,6 @@
 import 'package:cafe_app/feautures/data/models/domain_models/product.dart';
 import 'package:cafe_app/feautures/presentation/bloc/products/cubit/products_cubit.dart';
+import 'package:cafe_app/feautures/presentation/widgets/product_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -87,21 +88,20 @@ class _ProductsViewState extends State<ProductsView> {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   final product = state.products![index];
-                  return ListTile(
-                    title: Text(
-                      product.title,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                      ),
-                    ),
-                    trailing: Text(
-                      product.count.toString(),
-                      style: const TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                      ),
-                    ),
+                  return ProductTile(
+                    product: product,
+                    onCountDecreased: () {
+                      final updatedProduct = product.copyWith(
+                        count: product.count - 1,
+                      );
+                      cubit.updateProduct(updatedProduct);
+                    },
+                    onCountIncreaesed: () {
+                      final updatedProduct = product.copyWith(
+                        count: product.count + 1,
+                      );
+                      cubit.updateProduct(updatedProduct);
+                    },
                   );
                 },
               ),
